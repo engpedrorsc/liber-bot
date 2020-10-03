@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from time import sleep
 import html
 import tweepy
+from datetime import datetime
 
 
 '''
@@ -56,7 +57,8 @@ def main():
     while True:
         text = get_msg(driver, url, wdw)
         api.update_status(text)
-        sleep_time = int(12*60*60)
+        print(f'Tweet enviado às {datetime.now()}:\n{text}')
+        sleep_time = int(8*60*60)
         sleep(sleep_time)
 
 
