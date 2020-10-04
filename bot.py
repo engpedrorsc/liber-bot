@@ -17,7 +17,6 @@ def open_browser(driver):
     options = webdriver.FirefoxOptions()
     options.headless = True
     return webdriver.Firefox(firefox_profile=profile, options=options)
-    # return webdriver.Firefox()
 
 
 def get_value(driver, el_id):
@@ -30,14 +29,9 @@ def get_msg(driver, url, wdw):
     driver.get(url)
     wdw.until(presence_of_element_located((By.ID, 'cont')))
     sleep(1)
-
     title = get_value(driver, 'titulo')
     value = get_value(driver, 'cont')
-
-    driver.quit()
-
     msg = f'Este é o roubo que a sonegação de impostos evitou {title.split(", ")[1]}:\n\n{value}'
-
     return msg
 
 
@@ -62,8 +56,8 @@ def main():
     while True:
         text = get_msg(driver, url, wdw)
         api.update_status(text)
-        sleep_time = int(4*60*60)
-        sleep(sleep_time)    
+        sleep_time = int(12*60*60)
+        sleep(sleep_time)
 
 
 if __name__ == '__main__':
