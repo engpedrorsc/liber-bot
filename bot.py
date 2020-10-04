@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from time import sleep
 import html
 import tweepy
+from datetime import datetime
 
 
 '''
@@ -35,6 +36,21 @@ def get_msg(driver, url, wdw):
     return msg
 
 
+def send_msg(consumer_key, consumer_secret, key, secret, msg):
+    #Twitter authentication
+    consumer_key = '123zKkQFrW6ia1cWQWzHalYzy'
+    consumer_secret = 'ZTH9mg82M6KdPFG4XwK1a7IbAzzwCAg9ZF5x8qQSfUkW2MPq4v'
+    key = '1312168239724625920-glxwhYBiMeh2cgpvuKwGgaCUtv3ziW'
+    secret = 'qVlIcbqAMeMyR3agQFnISTru5swQjCNH7gRevPXdLHnew'
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(key, secret)
+
+    api = tweepy.API(auth)
+    api.update_status(msg)
+    print(f'Tweet enviado às {datetime.now()}:\n{msg}')
+    return
+
+
 '''
 MAIN
 '''
@@ -43,21 +59,15 @@ def main():
     driver = open_browser('geckodriver.exe')
     wdw = WebDriverWait(driver, 15, poll_frequency=0.5, ignored_exceptions=None)
     url = 'http://www.quantocustaobrasil.com.br/2012/widget_300x220_txt/'
-
-    #Twitter authentication
     consumer_key = '123zKkQFrW6ia1cWQWzHalYzy'
     consumer_secret = 'ZTH9mg82M6KdPFG4XwK1a7IbAzzwCAg9ZF5x8qQSfUkW2MPq4v'
     key = '1312168239724625920-glxwhYBiMeh2cgpvuKwGgaCUtv3ziW'
     secret = 'qVlIcbqAMeMyR3agQFnISTru5swQjCNH7gRevPXdLHnew'
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(key, secret)
-    api = tweepy.API(auth)
-
+    
     while True:
         text = get_msg(driver, url, wdw)
-        api.update_status(text)
-        sleep_time = int(12*60*60)
-        sleep(sleep_time)
+        send_msg(consumer_key, consumer_secret, key, secret, text)
+        sleep(int(8*60*60))
 
 
 if __name__ == '__main__':
