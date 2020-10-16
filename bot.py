@@ -5,7 +5,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from time import sleep
 import html
 import tweepy
-from datetime import datetime
+from datetime import datetime as dt
+
+'''
+NOTAS
+
+Criar executável: pyinstaller --clean -F bot.py
+'''
 
 
 '''
@@ -38,17 +44,32 @@ def get_msg(driver, url, wdw):
 
 def send_msg(consumer_key, consumer_secret, key, secret, msg):
     #Twitter authentication
-    consumer_key = '123zKkQFrW6ia1cWQWzHalYzy'
-    consumer_secret = 'ZTH9mg82M6KdPFG4XwK1a7IbAzzwCAg9ZF5x8qQSfUkW2MPq4v'
-    key = '1312168239724625920-glxwhYBiMeh2cgpvuKwGgaCUtv3ziW'
-    secret = 'qVlIcbqAMeMyR3agQFnISTru5swQjCNH7gRevPXdLHnew'
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(key, secret)
 
     api = tweepy.API(auth)
     api.update_status(msg)
-    print(f'Tweet enviado às {datetime.now()}:\n{msg}')
+    print(f'Tweet enviado às {dt.now()}:\n{msg}')
     return
+
+
+def countdown(n, step, text_plural, text_singular):
+    while n > 0:
+        count_plural = text_plural.format(n)
+        count_singular = text_singular.format(n)
+
+        if n > 1:
+            print(count_plural, end="\r")
+        elif n == 1:
+            print(count_singular, end="\r")
+        else:
+            print("Contagem regressiva com número negativo.")
+            exit()
+
+        
+        n -= step
+        sleep(step)
+        print(" " * max(len(count_plural), len(count_singular)), end="\r")
 
 
 '''
@@ -63,11 +84,25 @@ def main():
     consumer_secret = 'ZTH9mg82M6KdPFG4XwK1a7IbAzzwCAg9ZF5x8qQSfUkW2MPq4v'
     key = '1312168239724625920-glxwhYBiMeh2cgpvuKwGgaCUtv3ziW'
     secret = 'qVlIcbqAMeMyR3agQFnISTru5swQjCNH7gRevPXdLHnew'
-    
+
+    evasion_post_hours = [7, 12, 20]
+    for hour in evasion_post_hours:
+        if hour >= dt.now().hour:
+            start_hour_index = evasion_post_hours.index(hour)
+            break
+
+    evasion_index = start_hour_index
     while True:
-        text = get_msg(driver, url, wdw)
-        send_msg(consumer_key, consumer_secret, key, secret, text)
-        sleep(int(8*60*60))
+        if evasion_post_hours[evasion_index] == dt.now().hour:
+            text = get_msg(driver, url, wdw)
+            send_msg(consumer_key, consumer_secret, key, secret, text)
+            evasion_index +=1
+            if evasion_index >= len(evasion_post_hours):
+                evasion_index = 0
+        else:
+            print(f'Tentativa de envio em {dt.now()}')
+        
+        countdown(20*60, 10, 'Nova tentativa em {} segundos.', 'Nova tentativa em {} segundo.')
 
 
 if __name__ == '__main__':
