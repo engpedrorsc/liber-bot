@@ -54,6 +54,23 @@ def send_msg(consumer_key, consumer_secret, key, secret, msg):
     return
 
 
+def read_keys(file):
+    try:
+        f = open(file, 'rb')
+    except FileNotFoundError:
+        f = open(file, 'w')
+        f.close()
+        return read_input(path, file, msg)
+    keys_file = f.read().decode('UTF-8').splitlines()
+    f.close()
+
+    keys = []
+    sep = ' = '
+    for key in keys_file:
+        keys.append(key[key.find(sep)+len(sep)+1:-1])
+    return keys
+
+
 def countdown(n, step, text_plural, text_singular):
     while n > 0:
         count_plural = text_plural.format(n)
@@ -82,7 +99,8 @@ def main():
     wdw = WebDriverWait(driver, 15, poll_frequency=0.5,
                         ignored_exceptions=None)
     url = 'http://www.quantocustaobrasil.com.br/2012/widget_300x220_txt/'
-    # inserir chaves
+
+    keys = read_keys('keys.txt')
 
     evasion_post_hours = [7, 12, 20]
     for hour in evasion_post_hours:
@@ -94,7 +112,7 @@ def main():
     while True:
         if evasion_post_hours[evasion_index] == dt.now().hour:
             text = get_msg(driver, url, wdw)
-            send_msg(consumer_key, consumer_secret, key, secret, text)
+            send_msg(keys[0], keys[1], keys[2], keys[3], text)
             evasion_index += 1
             if evasion_index >= len(evasion_post_hours):
                 evasion_index = 0
