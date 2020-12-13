@@ -60,7 +60,7 @@ def read_keys(file):
     except FileNotFoundError:
         f = open(file, 'w')
         f.close()
-        return read_input(path, file, msg)
+        return read_keys(file)
     keys_file = f.read().decode('UTF-8').splitlines()
     f.close()
 
