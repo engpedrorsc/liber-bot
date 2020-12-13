@@ -58,7 +58,7 @@ def read_keys(file):
     try:
         f = open(file, 'rb')
     except FileNotFoundError:
-        raise FileNotFoundError("O arquivo com as chaves não foi encontrato.")
+        raise FileNotFoundError("O arquivo com as chaves não foi encontrado.")
     keys_file = f.read().decode('UTF-8').splitlines()
     f.close()
 
