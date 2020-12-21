@@ -59,6 +59,7 @@ def read_keys(file):
         f = open(file, 'rb')
     except FileNotFoundError:
         raise FileNotFoundError("O arquivo com as chaves não foi encontrado.")
+
     keys_file = f.read().decode('UTF-8').splitlines()
     f.close()
 
@@ -69,22 +70,34 @@ def read_keys(file):
     return keys
 
 
+def find_next_post_hour_index(post_hours):
+    hour_now = dt.now().hour
+    try:
+        next_index = next(index for index, hour in enumerate(
+            post_hours) if hour >= hour_now)
+    except StopIteration:
+        next_index = 0
+    finally:
+        return next_index
+
+
 def countdown(n, step, text_plural, text_singular):
     while n > 0:
         count_plural = text_plural.format(n)
         count_singular = text_singular.format(n)
 
         if n > 1:
-            print(count_plural, end="\r")
+            print(count_plural, end='\r')
         elif n == 1:
-            print(count_singular, end="\r")
+            print(count_singular, end='\r')
         else:
-            print("Contagem regressiva com número negativo.")
+            print('Contagem regressiva com número negativo.')
+            input('Pressione ENTER para finalizar.')
             exit()
 
         n -= step
         sleep(step)
-        print(" " * max(len(count_plural), len(count_singular)), end="\r")
+        print(' ' * max(len(count_plural), len(count_singular)), end='\r')
 
 
 '''
@@ -99,25 +112,21 @@ def main():
     url = 'http://www.quantocustaobrasil.com.br/2012/widget_300x220_txt/'
 
     keys = read_keys('keys.txt')
+    post_hours = [7, 12, 20]
+    next_post_hour_index = find_next_post_hour_index(post_hours)
 
-    evasion_post_hours = [7, 12, 20]
-    for hour in evasion_post_hours:
-        if hour >= dt.now().hour:
-            start_hour_index = evasion_post_hours.index(hour)
-            break
-
-    evasion_index = start_hour_index
     while True:
-        if evasion_post_hours[evasion_index] == dt.now().hour:
+        if dt.now().hour == post_hours[next_post_hour_index]:
             text = get_msg(driver, url, wdw)
             send_msg(keys[0], keys[1], keys[2], keys[3], text)
-            evasion_index += 1
-            if evasion_index >= len(evasion_post_hours):
-                evasion_index = 0
+            next_post_hour_index += 1
+            if next_post_hour_index >= len(post_hours):
+                next_post_hour_index = 0
         else:
-            print(f'Tentativa de envio em {dt.now()}')
+            print(
+                f'Próximo envio às {post_hours[next_post_hour_index]}h. {dt.now()}')
 
-        countdown(20*60, 10, 'Nova tentativa em {} segundos.',
+        countdown(15*60, 10, 'Nova tentativa em {} segundos.',
                   'Nova tentativa em {} segundo.')
 
 
