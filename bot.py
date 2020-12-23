@@ -19,7 +19,7 @@ FUNCTIONS
 '''
 
 
-def open_browser(driver):
+def open_browser():
     profile = webdriver.FirefoxProfile()
     profile.set_preference('intl.accept_languages', 'en')
     options = webdriver.FirefoxOptions()
@@ -106,7 +106,7 @@ MAIN
 
 
 def main():
-    driver = open_browser('geckodriver.exe')
+    driver = open_browser()
     wdw = WebDriverWait(driver, 15, poll_frequency=0.5,
                         ignored_exceptions=None)
     url = 'http://www.quantocustaobrasil.com.br/2012/widget_300x220_txt/'
