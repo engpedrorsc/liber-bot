@@ -10,7 +10,7 @@ from datetime import datetime as dt
 '''
 NOTAS
 
-Criar executável: pyinstaller --clean -F bot 23.59.py
+Criar executável: pyinstaller --clean -F "bot 23.59.py"
 '''
 
 
@@ -101,10 +101,12 @@ def main():
 
     keys = read_keys('keys.txt')
 
-    while True:
+    post = True
+    while post:
         if dt.now().hour == 23 and dt.now().minute == 59:
             text = get_msg(driver, url, wdw)
             send_msg(keys[0], keys[1], keys[2], keys[3], text)
+            post = False
 
         countdown(20, 1, 'Nova tentativa em {} segundos.',
                   'Nova tentativa em {} segundo.')
