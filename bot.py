@@ -6,6 +6,7 @@ from time import sleep
 import html
 import tweepy
 from datetime import datetime as dt
+from keys import *
 
 '''
 NOTAS
@@ -54,20 +55,20 @@ def send_msg(consumer_key, consumer_secret, key, secret, msg):
     return
 
 
-def read_keys(file):
-    try:
-        f = open(file, 'rb')
-    except FileNotFoundError:
-        raise FileNotFoundError("O arquivo com as chaves não foi encontrado.")
+# def read_keys(file):
+#     try:
+#         f = open(file, 'rb')
+#     except FileNotFoundError:
+#         raise FileNotFoundError("O arquivo com as chaves não foi encontrado.")
 
-    keys_file = f.read().decode('UTF-8').splitlines()
-    f.close()
+#     keys_file = f.read().decode('UTF-8').splitlines()
+#     f.close()
 
-    keys = []
-    sep = ' = '
-    for key in keys_file:
-        keys.append(key[key.find(sep)+len(sep)+1:-1])
-    return keys
+#     keys = []
+#     sep = ' = '
+#     for key in keys_file:
+#         keys.append(key[key.find(sep)+len(sep)+1:-1])
+#     return keys
 
 
 def find_next_post_hour_index(post_hours):
@@ -111,14 +112,14 @@ def main():
                         ignored_exceptions=None)
     url = 'http://www.quantocustaobrasil.com.br/2012/widget_300x220_txt/'
 
-    keys = read_keys('keys.txt')
+    # keys = read_keys('keys.txt')
     post_hours = [7, 12, 20]
     next_post_hour_index = find_next_post_hour_index(post_hours)
 
     while True:
         if dt.now().hour == post_hours[next_post_hour_index]:
             text = get_msg(driver, url, wdw)
-            send_msg(keys[0], keys[1], keys[2], keys[3], text)
+            send_msg(consumer_key, consumer_secret, key, secret, text)
             next_post_hour_index += 1
             if next_post_hour_index >= len(post_hours):
                 next_post_hour_index = 0
