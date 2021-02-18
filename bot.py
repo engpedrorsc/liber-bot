@@ -17,18 +17,15 @@ def main():
     url = 'http://www.quantocustaobrasil.com.br/2012/widget_300x220_txt/'
 
     # keys = read_keys('keys.txt')
-    post_hours = [7, 12, 20]
+    post_hours = [9, 20]
     next_post_hour_index = find_next_post_hour_index(post_hours)
+
+    next_post_hour_index = start_action(post_hours, next_post_hour_index, driver, url, wdw, consumer_key, consumer_secret, key, secret)
 
     while True:
         if dt.now().hour == post_hours[next_post_hour_index]:
-            text = get_msg(driver, url, wdw)
-            send_msg(consumer_key, consumer_secret, key, secret, text)
-
-            if next_post_hour_index < len(post_hours)-1:
-                next_post_hour_index += 1
-            else:
-                next_post_hour_index = 0
+            send_msg(driver, url, wdw, consumer_key, consumer_secret, key, secret)
+            next_post_hour_index = increment(post_hours, next_post_hour_index)
 
         else:
             print(

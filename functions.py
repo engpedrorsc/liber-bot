@@ -21,17 +21,14 @@ def get_value(driver, el_id):
     return value
 
 
-def get_msg(driver, url, wdw):
+def send_msg(driver, url, wdw, consumer_key, consumer_secret, key, secret):
     driver.get(url)
     wdw.until(presence_of_element_located((By.ID, 'cont')))
     sleep(1)
     title = get_value(driver, 'titulo')
     value = get_value(driver, 'cont')
     msg = f'Este é o roubo que a sonegação de impostos evitou {title.split(", ")[1]}:\n\n{value}'
-    return msg
-
-
-def send_msg(consumer_key, consumer_secret, key, secret, msg):
+    
     # Twitter authentication
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(key, secret)
@@ -70,3 +67,32 @@ def countdown(n, step, text_plural, text_singular):
         n -= step
         sleep(step)
         print(' ' * max(len(count_plural), len(count_singular)), end='\r')
+
+def increment(list, index):
+    if index < len(list)-1:
+        index += 1
+    else:
+        index = 0
+    return index
+
+def start_action(post_hours, next_post_hour_index, driver, url, wdw, consumer_key, consumer_secret, key, secret):
+    list_of_choices = [1,2,3]
+    print(f'Próximo horário: {post_hours[next_post_hour_index]}h')
+    print('1 - Postar a partir do próximo horário programado.')
+    print('2 - Postar agora e PULAR o próximo horário programado.')
+    print('3 - Postar agora e NÃO PULAR o próximo horário programado.')
+    choice = int(input('\nDigite a sua opção e pressione ENTER: '))
+
+    if choice not in list_of_choices:
+        print('>>> Opção inválida. <<<\n')
+        return start_action(post_hours, next_post_hour_index, driver, url, wdw, consumer_key, consumer_secret, key, secret)
+
+    if choice == 1:
+        pass
+    elif choice == 2:
+        send_msg(driver, url, wdw, consumer_key, consumer_secret, key, secret)
+        next_post_hour_index = increment(post_hours, next_post_hour_index)
+    elif choice == 3:
+        send_msg(driver, url, wdw, consumer_key, consumer_secret, key, secret)
+    
+    return next_post_hour_index
