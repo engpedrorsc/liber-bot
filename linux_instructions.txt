@@ -1,0 +1,21 @@
+I understand you have some executables in one of your home folders, e.g., in ~/bin and you want to be able to execute them without always typing the full path ~/bin/my_cool_executable.
+
+You already observed that entering PATH=~/bin:$PATH in your terminal made things work... but only until you close the terminal. When you open a new one, your former PATH variable gets reset to its original value. By the way, I guess you know how to, at any time, check the value of the PATH variable: like so:
+
+echo "$PATH"
+How to make your change permanent so that your PATH will still be the same when you reopen a new terminal? It's very easy, you just need to edit your .bashrc file. Let's use the gedit editor: In a terminal, type this:
+
+gedit ~/.bashrc
+This opens up the gedit editor. Scroll to the end of the file and add this:
+
+# Added by me on 2013/06/24
+PATH=~/bin:$PATH
+export PATH
+and save the file and quit gedit. Then close your terminal and open a new one. Now your PATH variable should have ~/bin in front of it so that your commands in ~/bin will be accessible without typing their full path. And you know how to check that: echo "$PATH".
+
+Enjoy!
+
+Warning. It is considered bad practice and a security vulnerability to put . in your
+
+
+Source: https://askubuntu.com/questions/312163/path-variable-gets-always-reset-how-to-fix-that

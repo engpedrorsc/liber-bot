@@ -28,7 +28,7 @@ def send_msg(driver, url, wdw, consumer_key, consumer_secret, key, secret):
     title = get_value(driver, 'titulo')
     value = get_value(driver, 'cont')
     msg = f'Este é o roubo que a sonegação de impostos evitou {title.split(", ")[1]}:\n\n{value}'
-    
+
     # Twitter authentication
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(key, secret)
@@ -68,6 +68,7 @@ def countdown(n, step, text_plural, text_singular):
         sleep(step)
         print(' ' * max(len(count_plural), len(count_singular)), end='\r')
 
+
 def increment(list, index):
     if index < len(list)-1:
         index += 1
@@ -75,8 +76,9 @@ def increment(list, index):
         index = 0
     return index
 
+
 def start_action(post_hours, next_post_hour_index, driver, url, wdw, consumer_key, consumer_secret, key, secret):
-    list_of_choices = [1,2,3]
+    list_of_choices = [1, 2, 3]
     print(f'Próximo horário: {post_hours[next_post_hour_index]}h')
     print('1 - Postar a partir do próximo horário programado.')
     print('2 - Postar agora e PULAR o próximo horário programado.')
@@ -94,5 +96,5 @@ def start_action(post_hours, next_post_hour_index, driver, url, wdw, consumer_ke
         next_post_hour_index = increment(post_hours, next_post_hour_index)
     elif choice == 3:
         send_msg(driver, url, wdw, consumer_key, consumer_secret, key, secret)
-    
+
     return next_post_hour_index
