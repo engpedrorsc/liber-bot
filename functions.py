@@ -78,11 +78,12 @@ def increment(list, index):
 
 
 def start_action(post_hours, next_post_hour_index, driver, url, wdw, consumer_key, consumer_secret, key, secret):
-    list_of_choices = [1, 2, 3]
+    list_of_choices = [1, 2, 3, 4]
     print(f'Próximo horário: {post_hours[next_post_hour_index]}h')
     print('1 - Postar a partir do próximo horário programado.')
     print('2 - Postar agora e PULAR o próximo horário programado.')
     print('3 - Postar agora e NÃO PULAR o próximo horário programado.')
+    print('4 - Postar agora e FECHAR.')
     choice = int(input('\nDigite a sua opção e pressione ENTER: '))
 
     if choice not in list_of_choices:
@@ -96,5 +97,9 @@ def start_action(post_hours, next_post_hour_index, driver, url, wdw, consumer_ke
         next_post_hour_index = increment(post_hours, next_post_hour_index)
     elif choice == 3:
         send_msg(driver, url, wdw, consumer_key, consumer_secret, key, secret)
+    elif choice == 4:
+        send_msg(driver, url, wdw, consumer_key, consumer_secret, key, secret)
+        input('Pressione ENTER para fechar.')
+        exit()
 
     return next_post_hour_index
