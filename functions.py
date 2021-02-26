@@ -5,6 +5,7 @@ from time import sleep
 import html
 import tweepy
 from datetime import datetime as dt
+import sys
 
 
 def open_browser():
@@ -62,7 +63,7 @@ def countdown(n, step, text_plural, text_singular):
         else:
             print('Contagem regressiva com número negativo.')
             input('Pressione ENTER para finalizar.')
-            exit()
+            sys.exit()
 
         n -= step
         sleep(step)
@@ -100,6 +101,6 @@ def start_action(post_hours, next_post_hour_index, driver, url, wdw, consumer_ke
     elif choice == 4:
         send_msg(driver, url, wdw, consumer_key, consumer_secret, key, secret)
         input('Pressione ENTER para fechar.')
-        exit()
+        sys.exit()
 
     return next_post_hour_index
