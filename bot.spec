@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['bot.py'],
-             pathex=['/home/linux/Documentos/GitHub/liber-bot'],
+             pathex=['/home/linux/Documents/GitHub/liber-bot'],
              binaries=[],
              datas=[],
              hiddenimports=[],
