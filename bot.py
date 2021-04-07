@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from functions import *
-from keys import *
+import os
+import ast
 
 '''
 NOTAS
@@ -14,19 +15,25 @@ def main():
     driver = open_browser()
     wdw = WebDriverWait(driver, 15, poll_frequency=0.5,
                         ignored_exceptions=None)
-    url = 'http://www.quantocustaobrasil.com.br/2012/widget_300x220_txt/'
+    url = os.getenv('SOURCE_URL')
 
     # keys = read_keys('keys.txt')
-    post_hours = [9, 20]
+    post_hours = ast.literal_eval(os.getenv('POST_HOURS'))
+    print(post_hours)
     next_post_hour_index = find_next_post_hour_index(post_hours)
 
+    consumer_key = str(os.getenv('TWITTER_CONSUMER_KEY'))
+    consumer_secret = str(os.getenv('TWITTER_CONSUMER_SECRET'))
+    access_key = str(os.getenv('TWITTER_ACCESS_KEY'))
+    access_secret = str(os.getenv('TWITTER_ACCESS_SECRET'))
+
     next_post_hour_index = start_action(
-        post_hours, next_post_hour_index, driver, url, wdw, consumer_key, consumer_secret, key, secret)
+        post_hours, next_post_hour_index, driver, url, wdw, consumer_key, consumer_secret, access_key, access_secret)
 
     while True:
         if dt.now().hour == post_hours[next_post_hour_index]:
             send_msg(driver, url, wdw, consumer_key,
-                     consumer_secret, key, secret)
+                     consumer_secret, access_key, access_secret)
             next_post_hour_index = increment(post_hours, next_post_hour_index)
 
         else:

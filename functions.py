@@ -22,7 +22,7 @@ def get_value(driver, el_id):
     return value
 
 
-def send_msg(driver, url, wdw, consumer_key, consumer_secret, key, secret):
+def send_msg(driver, url, wdw, consumer_key, consumer_secret, access_key, access_secret):
     driver.get(url)
     wdw.until(presence_of_element_located((By.ID, 'cont')))
     sleep(1)
@@ -32,7 +32,7 @@ def send_msg(driver, url, wdw, consumer_key, consumer_secret, key, secret):
 
     # Twitter authentication
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(key, secret)
+    auth.set_access_token(access_key, access_secret)
 
     api = tweepy.API(auth)
     api.update_status(msg)
