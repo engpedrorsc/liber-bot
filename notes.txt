@@ -1,0 +1,57 @@
+cx_Freeze installations error to be fixed
+
+[linux@fedora liber-bot]$ pip install cx_Freeze
+Defaulting to user installation because normal site-packages is not writeable
+Collecting cx_Freeze
+  Using cached cx_Freeze-6.6.tar.gz (120 kB)
+Requirement already satisfied: importlib_metadata>=3.1.1 in /home/linux/.local/lib/python3.9/site-packages (from cx_Freeze) (4.0.1)
+Requirement already satisfied: zipp>=0.5 in /home/linux/.local/lib/python3.9/site-packages (from importlib_metadata>=3.1.1->cx_Freeze) (3.4.1)
+Using legacy 'setup.py install' for cx-Freeze, since package 'wheel' is not installed.
+Installing collected packages: cx-Freeze
+    Running setup.py install for cx-Freeze ... error
+    ERROR: Command errored out with exit status 1:
+     command: /usr/bin/python3 -u -c 'import sys, setuptools, tokenize; sys.argv[0] = '"'"'/tmp/pip-install-l7aeqp_s/cx-freeze_19b08e51488d467fb5c46e079f5f4f40/setup.py'"'"'; __file__='"'"'/tmp/pip-install-l7aeqp_s/cx-freeze_19b08e51488d467fb5c46e079f5f4f40/setup.py'"'"';f=getattr(tokenize, '"'"'open'"'"', open)(__file__);code=f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"'))' install --record /tmp/pip-record-dk972rj9/install-record.txt --single-version-externally-managed --user --prefix= --compile --install-headers /home/linux/.local/include/python3.9/cx-Freeze
+         cwd: /tmp/pip-install-l7aeqp_s/cx-freeze_19b08e51488d467fb5c46e079f5f4f40/
+    Complete output (40 lines):
+    running install
+    running build
+    running build_py
+    creating build
+    creating build/lib.linux-x86_64-3.9
+    creating build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/__init__.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/__main__.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/macdist.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/winmsvcr.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/hooks.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/patchelf.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/exception.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/cli.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/dist.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/finder.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/darwintools.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/executable.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/freezer.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/setupwriter.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/windist.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/common.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/module.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    copying cx_Freeze/winversioninfo.py -> build/lib.linux-x86_64-3.9/cx_Freeze
+    creating build/lib.linux-x86_64-3.9/cx_Freeze/initscripts
+    copying cx_Freeze/initscripts/ConsoleSetLibPath.py -> build/lib.linux-x86_64-3.9/cx_Freeze/initscripts
+    copying cx_Freeze/initscripts/SharedLibSource.py -> build/lib.linux-x86_64-3.9/cx_Freeze/initscripts
+    copying cx_Freeze/initscripts/SharedLib.py -> build/lib.linux-x86_64-3.9/cx_Freeze/initscripts
+    copying cx_Freeze/initscripts/Console.py -> build/lib.linux-x86_64-3.9/cx_Freeze/initscripts
+    copying cx_Freeze/initscripts/__startup__.py -> build/lib.linux-x86_64-3.9/cx_Freeze/initscripts
+    running build_ext
+    creating build/temp.linux-x86_64-3.9
+    creating build/temp.linux-x86_64-3.9/source
+    creating build/temp.linux-x86_64-3.9/source/bases
+    gcc -pthread -Wno-unused-result -Wsign-compare -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DNDEBUG -O2 -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -D_GNU_SOURCE -fPIC -fwrapv -O2 -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -D_GNU_SOURCE -fPIC -fwrapv -O2 -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -D_GNU_SOURCE -fPIC -fwrapv -fPIC -I/usr/include/python3.9 -c source/bases/Console.c -o build/temp.linux-x86_64-3.9/source/bases/Console.o
+    source/bases/Console.c:7:10: fatal error: Python.h: No such file or directory
+        7 | #include <Python.h>
+          |          ^~~~~~~~~~
+    compilation terminated.
+    error: command '/usr/bin/gcc' failed with exit code 1
+    ----------------------------------------
+ERROR: Command errored out with exit status 1: /usr/bin/python3 -u -c 'import sys, setuptools, tokenize; sys.argv[0] = '"'"'/tmp/pip-install-l7aeqp_s/cx-freeze_19b08e51488d467fb5c46e079f5f4f40/setup.py'"'"'; __file__='"'"'/tmp/pip-install-l7aeqp_s/cx-freeze_19b08e51488d467fb5c46e079f5f4f40/setup.py'"'"';f=getattr(tokenize, '"'"'open'"'"', open)(__file__);code=f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"'))' install --record /tmp/pip-record-dk972rj9/install-record.txt --single-version-externally-managed --user --prefix= --compile --install-headers /home/linux/.local/include/python3.9/cx-Freeze Check the logs for full command output.
